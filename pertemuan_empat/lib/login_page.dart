@@ -35,9 +35,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _createImage(){
+  Widget _createImage() {
     return Container(
-      child: Image.network("https://cf.shopee.co.id/file/1740a66d75c848b38c85ade20a2505e2"),
+      child: Image.network(
+          "https://cf.shopee.co.id/file/1740a66d75c848b38c85ade20a2505e2"),
     );
   }
 
@@ -126,8 +127,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _loginProcess(BuildContext context){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+  void _loginProcess(BuildContext context) {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return HomePage();
     }));
   }
