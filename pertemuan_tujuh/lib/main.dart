@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pertemuan_tujuh/data/hive_database.dart';
 import 'package:pertemuan_tujuh/view/login_page.dart';
 
 void main() {
+  HiveDatabase().initDB();
   runApp(const MyApp());
 }
 
