@@ -15,6 +15,21 @@ class _LoginPageState extends State<LoginPage> {
   final password_controller = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  void _checkLoginStatus() {
+    SharedPref().getLoginStatus().then((status) {
+      if (status) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -67,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
     String username = username_controller.text;
     String password = password_controller.text;
     if (username.isNotEmpty || password.isNotEmpty) {
+      SharedPref().setLogin(username);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomePage()));
     }
