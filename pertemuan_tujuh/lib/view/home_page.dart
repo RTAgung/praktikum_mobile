@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  HiveDatabase _hd = HiveDatabase();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +40,51 @@ class _HomePageState extends State<HomePage> {
         },
         child: Icon(Icons.add),
       ),
-      body: Container(),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ListView.builder(
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            return _cardItemList();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _cardItemList() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 4),
+      child: Card(
+        child: InkWell(
+          onTap: () {},
+          child: Container(
+            padding: EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      children: [
+                        Text("Title"),
+                        Text("Text"),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

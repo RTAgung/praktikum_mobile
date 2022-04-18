@@ -11,6 +11,8 @@ class NoteFormPage extends StatefulWidget {
 }
 
 class _NoteFormPageState extends State<NoteFormPage> {
+  HiveDatabase _hd = HiveDatabase();
+
   final title_controller = TextEditingController();
   final text_controller = TextEditingController();
 
@@ -62,7 +64,7 @@ class _NoteFormPageState extends State<NoteFormPage> {
     String text = text_controller.text;
 
     Note note = Note(title: title, text: text);
-    HiveDatabase().addData(note);
+    _hd.addData(note);
     Navigator.pop(context);
   }
 }
