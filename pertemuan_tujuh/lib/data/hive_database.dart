@@ -12,6 +12,14 @@ class HiveDatabase {
     return localDBBox.getAt(position);
   }
 
+  void deleteAt(int position) {
+    localDBBox.deleteAt(position);
+  }
+
+  void putNoteAt(int position, Note value) {
+    localDBBox.putAt(position, value);
+  }
+
   int getLength() {
     return localDBBox.length;
   }

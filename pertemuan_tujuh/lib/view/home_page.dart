@@ -42,22 +42,39 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return _cardItemList();
+        child: ValueListenableBuilder(
+          valueListenable: _hd.localDBBox.listenable(),
+          builder: (BuildContext context, Box<dynamic> value, Widget? child) {
+            if (value.isEmpty) {
+              return Text("Data Kosong");
+            } else {
+              return ListView.builder(
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  return _cardItemList(index);
+                },
+              );
+            }
           },
         ),
       ),
     );
   }
 
-  Widget _cardItemList() {
+  Widget _cardItemList(int index) {
+    Note? note = _hd.getNoteAt(index);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Card(
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return NoteFormPage(
+                note: note,
+                index: index,
+              );
+            }));
+          },
           child: Container(
             padding: EdgeInsets.all(12),
             child: Row(
@@ -67,8 +84,10 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.topLeft,
                     child: Column(
                       children: [
-                        Text("Title"),
-                        Text("Text"),
+                        Text(
+                          "${note?.title}",
+                        ),
+                        Text("${note?.text}"),
                       ],
                     ),
                   ),
@@ -77,7 +96,9 @@ class _HomePageState extends State<HomePage> {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     icon: Icon(Icons.delete),
-                    onPressed: () {},
+                    onPressed: () {
+                      _hd.deleteAt(index);
+                    },
                   ),
                 ),
               ],

@@ -4,7 +4,10 @@ import 'package:pertemuan_tujuh/data/hive_database.dart';
 import 'package:pertemuan_tujuh/model/Note.dart';
 
 class NoteFormPage extends StatefulWidget {
-  const NoteFormPage({Key? key}) : super(key: key);
+  final Note? note;
+  final int? index;
+
+  const NoteFormPage({Key? key, this.note, this.index}) : super(key: key);
 
   @override
   State<NoteFormPage> createState() => _NoteFormPageState();
@@ -13,8 +16,30 @@ class NoteFormPage extends StatefulWidget {
 class _NoteFormPageState extends State<NoteFormPage> {
   HiveDatabase _hd = HiveDatabase();
 
-  final title_controller = TextEditingController();
-  final text_controller = TextEditingController();
+  var title_controller = TextEditingController();
+  var text_controller = TextEditingController();
+
+  bool isUpdate = false;
+  int index = 0;
+
+  void initVariable() {
+    String title = "";
+    String text = "";
+    if (widget.note != null && widget.index != null) {
+      title = widget.note!.title;
+      text = widget.note!.text;
+      isUpdate = true;
+      index = widget.index ?? 0;
+    }
+    title_controller.text = title;
+    text_controller.text = text;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initVariable();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +89,10 @@ class _NoteFormPageState extends State<NoteFormPage> {
     String text = text_controller.text;
 
     Note note = Note(title: title, text: text);
-    _hd.addData(note);
+    if (isUpdate)
+      _hd.putNoteAt(index, note);
+    else
+      _hd.addData(note);
     Navigator.pop(context);
   }
 }
